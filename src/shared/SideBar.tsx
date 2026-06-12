@@ -48,10 +48,6 @@ useEffect(() => {
   }
 }, [visible]);
 
-if (!visible) {
-  return null;
-}
-
 return (
   <View style={styles.overlay}>
     <TouchableOpacity
