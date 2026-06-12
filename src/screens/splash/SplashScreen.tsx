@@ -17,12 +17,16 @@ const SplashScreen = ({
   useEffect(() => {
     checkAuth();
   }, []);
+const floatAnim =
+  useRef(new Animated.Value(0))
+    .current;
 
-  const floatAnim =
+const pulseAnim =
   useRef(new Animated.Value(0))
     .current;
 
 useEffect(() => {
+  // Floating animation
   Animated.loop(
     Animated.sequence([
       Animated.timing(floatAnim, {
@@ -34,6 +38,23 @@ useEffect(() => {
       Animated.timing(floatAnim, {
         toValue: 0,
         duration: 2500,
+        useNativeDriver: true,
+      }),
+    ]),
+  ).start();
+
+  // Breathing / Pulse animation
+  Animated.loop(
+    Animated.sequence([
+      Animated.timing(pulseAnim, {
+        toValue: 1,
+        duration: 3000,
+        useNativeDriver: true,
+      }),
+
+      Animated.timing(pulseAnim, {
+        toValue: 0,
+        duration: 3000,
         useNativeDriver: true,
       }),
     ]),
@@ -86,6 +107,7 @@ return (
       barStyle="dark-content"
     />
 
+    {/* Top Glow */}
     <Animated.View
       style={[
         styles.bgTopGlow,
@@ -98,11 +120,19 @@ return (
                   outputRange: [0, -25],
                 }),
             },
+            {
+              scale:
+                pulseAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 1.18],
+                }),
+            },
           ],
         },
       ]}
     />
 
+    {/* Bottom Glow */}
     <Animated.View
       style={[
         styles.bgBottomGlow,
@@ -115,11 +145,19 @@ return (
                   outputRange: [0, 20],
                 }),
             },
+            {
+              scale:
+                pulseAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 1.12],
+                }),
+            },
           ],
         },
       ]}
     />
 
+    {/* Floating Card 1 */}
     <Animated.View
       style={[
         styles.floatingCard1,
@@ -138,6 +176,7 @@ return (
       ]}
     />
 
+    {/* Floating Card 2 */}
     <Animated.View
       style={[
         styles.floatingCard2,
@@ -156,6 +195,7 @@ return (
       ]}
     />
 
+    {/* Floating Card 3 */}
     <Animated.View
       style={[
         styles.floatingCard3,
@@ -174,6 +214,59 @@ return (
       ]}
     />
 
+    {/* Extra Animated Circles */}
+    <Animated.View
+      style={[
+        styles.circle1,
+        {
+          transform: [
+            {
+              scale:
+                pulseAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 1.4],
+                }),
+            },
+          ],
+        },
+      ]}
+    />
+
+    <Animated.View
+      style={[
+        styles.circle2,
+        {
+          transform: [
+            {
+              scale:
+                pulseAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 1.25],
+                }),
+            },
+          ],
+        },
+      ]}
+    />
+
+    <Animated.View
+      style={[
+        styles.circle3,
+        {
+          transform: [
+            {
+              scale:
+                pulseAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 1.35],
+                }),
+            },
+          ],
+        },
+      ]}
+    />
+
+    {/* Logo */}
     <Animated.View
       style={[
         styles.logoBox,
@@ -183,10 +276,7 @@ return (
               scale:
                 floatAnim.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [
-                    1,
-                    1.05,
-                  ],
+                  outputRange: [1, 1.05],
                 }),
             },
             {
@@ -199,21 +289,42 @@ return (
           ],
         },
       ]}>
-<Text style={styles.logoText}>
-  U
-</Text>
+      <Text style={styles.logoText}>
+        U
+      </Text>
 
-<View
-  style={{
-    position: 'absolute',
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    borderWidth: 1.5,
-    borderColor:
-      'rgba(255,255,255,0.25)',
-  }}
-/>
+      {/* Ripple Ring */}
+      <Animated.View
+        style={{
+          position: 'absolute',
+
+          width: 140,
+          height: 140,
+
+          borderRadius: 70,
+
+          borderWidth: 1.5,
+
+          borderColor:
+            'rgba(255,255,255,0.25)',
+
+          transform: [
+            {
+              scale:
+                pulseAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 1.35],
+                }),
+            },
+          ],
+
+          opacity:
+            pulseAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0.5, 0],
+            }),
+        }}
+      />
     </Animated.View>
 
     <Text style={styles.title}>
@@ -358,6 +469,49 @@ const styles = StyleSheet.create({
 
     transform: [{rotate: '25deg'}],
   },
+
+
+  circle1: {
+  position: 'absolute',
+  top: 90,
+  left: 45,
+
+  width: 60,
+  height: 60,
+
+  borderRadius: 30,
+
+  backgroundColor:
+    'rgba(37,99,235,0.12)',
+},
+
+circle2: {
+  position: 'absolute',
+  top: 220,
+  right: 30,
+
+  width: 35,
+  height: 35,
+
+  borderRadius: 18,
+
+  backgroundColor:
+    'rgba(99,102,241,0.18)',
+},
+
+circle3: {
+  position: 'absolute',
+  bottom: 180,
+  right: 70,
+
+  width: 90,
+  height: 90,
+
+  borderRadius: 45,
+
+  backgroundColor:
+    'rgba(59,130,246,0.08)',
+},
 
   logoBox: {
     width: 125,
