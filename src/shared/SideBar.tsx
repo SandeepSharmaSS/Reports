@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {
+  useEffect,
+  useRef,
+} from 'react';
+
 import {
   View,
   Text,
@@ -6,6 +10,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
+  Animated,
 } from 'react-native';
 
 const {height} = Dimensions.get('window');
@@ -25,113 +30,174 @@ const SideBar = ({
     return null;
   }
 
-  return (
-    <View style={styles.overlay}>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={styles.backdrop}
-        onPress={onClose}
-      />
-<View style={styles.bottomSheet}>
-  <View style={styles.bgCircle1} />
-  <View style={styles.bgCircle2} />
 
-  <View style={styles.handle} />
+  const slideAnim = useRef(
+  new Animated.Value(height),
+).current;
 
-  <View style={styles.header}>
-    <Text style={styles.headerTitle}>
-      Menu
-    </Text>
+useEffect(() => {
+  if (visible) {
+    slideAnim.setValue(height);
 
-    <TouchableOpacity onPress={onClose}>
-      <Text style={styles.closeIcon}>✕</Text>
-    </TouchableOpacity>
-  </View>
+    Animated.spring(slideAnim, {
+      toValue: 0,
+      tension: 60,
+      friction: 9,
+      useNativeDriver: true,
+    }).start();
+  }
+}, [visible]);
 
-  <View style={styles.profileCard}>
-    <View style={styles.profileAvatar}>
-      <Text style={styles.profileLetter}>U</Text>
-    </View>
+if (!visible) {
+  return null;
+}
 
-    <View>
-      <Text style={styles.profileTitle}>
-        UniOS Reports
-      </Text>
-
-      <Text style={styles.profileSub}>
-        Analytics & Reporting
-      </Text>
-    </View>
-  </View>
-
-  <ScrollView
-    showsVerticalScrollIndicator={false}
-    contentContainerStyle={{
-      paddingBottom: 20,
-    }}>
-
-    <TouchableOpacity style={styles.menuCard}>
-      <View>
-        <Text style={styles.menuTitle}>
-          Home
-        </Text>
-
-        <Text style={styles.menuSub}>
-          Dashboard overview
-        </Text>
-      </View>
-
-      <Text style={styles.arrow}>›</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity style={styles.menuCard}>
-      <View>
-        <Text style={styles.menuTitle}>
-          Reports
-        </Text>
-
-        <Text style={styles.menuSub}>
-          View generated reports
-        </Text>
-      </View>
-
-      <Text style={styles.arrow}>›</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity style={styles.menuCard}>
-      <View>
-        <Text style={styles.menuTitle}>
-          Settings
-        </Text>
-
-        <Text style={styles.menuSub}>
-          Manage preferences
-        </Text>
-      </View>
-
-      <Text style={styles.arrow}>›</Text>
-    </TouchableOpacity>
-
+return (
+  <View style={styles.overlay}>
     <TouchableOpacity
-      style={styles.logoutCard}
-      onPress={onLogout}>
-      <View>
-        <Text style={styles.logoutLabel}>
-          Sign Out
+      activeOpacity={1}
+      style={styles.backdrop}
+      onPress={onClose}
+    />
+
+    <Animated.View
+      style={[
+        styles.bottomSheet,
+        {
+          transform: [
+            {
+              translateY: slideAnim,
+            },
+          ],
+        },
+      ]}>
+
+      <View style={styles.bgCircle1} />
+      <View style={styles.bgCircle2} />
+
+      <View style={styles.handle} />
+
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>
+          Menu
         </Text>
 
-        <Text style={styles.logoutSub}>
-          End current session
-        </Text>
+        <TouchableOpacity
+          onPress={onClose}>
+          <Text style={styles.closeIcon}>
+            ✕
+          </Text>
+        </TouchableOpacity>
       </View>
 
-      <Text style={styles.arrow}>›</Text>
-    </TouchableOpacity>
+      <View style={styles.profileCard}>
+        <View style={styles.profileAvatar}>
+          <Text style={styles.profileLetter}>
+            U
+          </Text>
+        </View>
 
-  </ScrollView>
-</View>
-    </View>
-  );
+        <View>
+          <Text style={styles.profileTitle}>
+            UniOS Reports
+          </Text>
+
+          <Text style={styles.profileSub}>
+            Analytics & Reporting
+          </Text>
+        </View>
+      </View>
+
+      <ScrollView
+        showsVerticalScrollIndicator={
+          false
+        }
+        contentContainerStyle={{
+          paddingBottom: 20,
+        }}>
+
+        <TouchableOpacity
+          style={styles.menuCard}>
+          <View>
+            <Text
+              style={styles.menuTitle}>
+              Home
+            </Text>
+
+            <Text
+              style={styles.menuSub}>
+              Dashboard overview
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>
+            ›
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.menuCard}>
+          <View>
+            <Text
+              style={styles.menuTitle}>
+              Reports
+            </Text>
+
+            <Text
+              style={styles.menuSub}>
+              View generated reports
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>
+            ›
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.menuCard}>
+          <View>
+            <Text
+              style={styles.menuTitle}>
+              Settings
+            </Text>
+
+            <Text
+              style={styles.menuSub}>
+              Manage preferences
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>
+            ›
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.logoutCard}
+          onPress={onLogout}>
+          <View>
+            <Text
+              style={styles.logoutLabel}>
+              Sign Out
+            </Text>
+
+            <Text
+              style={styles.logoutSub}>
+              End current session
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>
+            ›
+          </Text>
+        </TouchableOpacity>
+
+      </ScrollView>
+
+    </Animated.View>
+  </View>
+);
 };
 
 export default SideBar;
