@@ -57,78 +57,75 @@ const LoginScreen = ({navigation}: any) => {
     }
   };
 
- return (
+return (
   <SafeAreaView style={styles.container}>
     <StatusBar
       backgroundColor="#EEF4FF"
       barStyle="dark-content"
     />
 
-    {/* Background Design */}
     <View style={styles.bgCircle1} />
     <View style={styles.bgCircle2} />
 
-    {/* Header */}
-    <View style={styles.headerSection}>
-      <View style={styles.logoContainer}>
-        <Text style={styles.logoText}>U</Text>
+    <View style={styles.centerContent}>
+      {/* Header */}
+      <View style={styles.headerSection}>
+        <Text style={styles.appName}>
+          UniOS Reports
+        </Text>
+
+        <Text style={styles.subTitle}>
+          Smart Reporting & Analytics Platform
+        </Text>
       </View>
 
-      <Text style={styles.appName}>
-        UniOS Reports
-      </Text>
-
-      <Text style={styles.subTitle}>
-        Smart Reporting & Analytics Platform
-      </Text>
-    </View>
-
-    {/* Login Card */}
-    <View style={styles.card}>
-      <Text style={styles.welcomeText}>
-        Sign In
-      </Text>
-
-      <Text style={styles.description}>
-        Continue to your dashboard
-      </Text>
-
-      <Text style={styles.label}>
-        Username
-      </Text>
-
-      <TextInput
-        value={username}
-        onChangeText={setUsername}
-        placeholder="Enter username"
-        placeholderTextColor="#94A3B8"
-        autoCapitalize="none"
-        style={styles.input}
-      />
-
-      <Text style={styles.label}>
-        Password
-      </Text>
-
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Enter password"
-        placeholderTextColor="#94A3B8"
-        secureTextEntry
-        style={styles.input}
-      />
-
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={handleLogin}
-        disabled={loading}>
-        <Text style={styles.loginButtonText}>
-          {loading
-            ? 'PLEASE WAIT...'
-            : 'LOGIN'}
+      {/* Login Card */}
+      <View style={styles.card}>
+        <Text style={styles.welcomeText}>
+          Sign In
         </Text>
-      </TouchableOpacity>
+
+        <Text style={styles.description}>
+          Continue to your dashboard
+        </Text>
+
+        <Text style={styles.label}>
+          Username
+        </Text>
+
+        <TextInput
+          value={username}
+          onChangeText={setUsername}
+          placeholder="Enter username"
+          placeholderTextColor="#94A3B8"
+          autoCapitalize="none"
+          style={styles.input}
+        />
+
+        <Text style={styles.label}>
+          Password
+        </Text>
+
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Enter password"
+          placeholderTextColor="#94A3B8"
+          secureTextEntry
+          style={styles.input}
+        />
+
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={handleLogin}
+          disabled={loading}>
+          <Text style={styles.loginButtonText}>
+            {loading
+              ? 'PLEASE WAIT...'
+              : 'LOGIN'}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
 
     <View style={styles.footer}>
@@ -150,9 +147,14 @@ const styles = StyleSheet.create({
 
 headerSection: {
   alignItems: 'center',
+  marginTop: 18,
+  marginBottom: 16,
+},
 
-  marginTop: 40,
-  marginBottom: 22,
+centerContent: {
+  flex: 1,
+  justifyContent: 'center',
+  paddingBottom: 40,
 },
 
   logoContainer: {
@@ -182,42 +184,42 @@ headerSection: {
     fontWeight: '800',
   },
 
-  appName: {
-    marginTop: 18,
+appName: {
+  marginTop: 8,
+  fontSize: 32,
+  fontWeight: '900',
+  color: '#0F172A',
+  letterSpacing: 0.5,
+},
 
-    fontSize: 30,
-    fontWeight: '800',
-
-    color: '#0F172A',
-  },
-
-  subTitle: {
-    marginTop: 6,
-
-    fontSize: 14,
-
-    color: '#64748B',
-  },
+subTitle: {
+  marginTop: 4,
+  fontSize: 13,
+  color: '#64748B',
+},
 
 card: {
-  marginHorizontal: 20,
+  marginHorizontal: 22,
 
-  backgroundColor: 'rgba(255,255,255,0.96)',
+  backgroundColor: '#FFFFFF',
 
-  borderRadius: 30,
+  borderRadius: 28,
 
-  paddingHorizontal: 24,
-  paddingVertical: 22,
+  paddingHorizontal: 22,
+  paddingVertical: 18,
 
-  elevation: 12,
+  borderWidth: 1,
+  borderColor: '#E8EEF9',
 
-  shadowColor: '#000',
+  elevation: 10,
+
+  shadowColor: '#1E293B',
   shadowOpacity: 0.08,
-  shadowRadius: 22,
+  shadowRadius: 20,
 
   shadowOffset: {
     width: 0,
-    height: 8,
+    height: 10,
   },
 },
 
@@ -230,55 +232,54 @@ card: {
     marginBottom: 6,
   },
 
-  label: {
-    fontSize: 14,
-    fontWeight: '700',
+label: {
+  fontSize: 13,
+  fontWeight: '700',
+  color: '#334155',
+  marginBottom: 6,
+  marginTop: 12,
+},
 
-    color: '#334155',
+input: {
+  height: 50,
 
-    marginBottom: 8,
-    marginTop: 16,
+  backgroundColor: '#F8FAFC',
+
+  borderWidth: 1,
+  borderColor: '#E2E8F0',
+
+  borderRadius: 14,
+
+  paddingHorizontal: 16,
+
+  fontSize: 15,
+
+  color: '#111827',
+},
+
+loginButton: {
+  height: 52,
+
+  borderRadius: 14,
+
+  backgroundColor: '#2563EB',
+
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  marginTop: 18,
+
+  elevation: 6,
+
+  shadowColor: '#2563EB',
+  shadowOpacity: 0.25,
+  shadowRadius: 10,
+
+  shadowOffset: {
+    width: 0,
+    height: 5,
   },
-
-  input: {
-    height: 58,
-
-    backgroundColor: '#F8FAFC',
-
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-
-    borderRadius: 18,
-
-    paddingHorizontal: 18,
-
-    fontSize: 15,
-
-    color: '#111827',
-  },
-
-  loginButton: {
-    height: 60,
-
-    borderRadius: 18,
-
-    backgroundColor: '#1E1B4B',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    marginTop: 28,
-
-    elevation: 8,
-
-    shadowColor: '#1E1B4B',
-    shadowOpacity: 0.25,
-    shadowRadius: 12,
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-  },
+},
 
   loginButtonText: {
     color: '#FFFFFF',
@@ -291,10 +292,9 @@ card: {
   },
 
 footer: {
-  flex: 1,
   justifyContent: 'flex-end',
   alignItems: 'center',
-  paddingBottom: 22,
+  paddingBottom: 14,
 },
 
   versionText: {
@@ -333,7 +333,7 @@ bgCircle2: {
 
 description: {
   color: '#64748B',
-  fontSize: 14,
-  marginBottom: 18,
+  fontSize: 13,
+  marginBottom: 14,
 },
 });
