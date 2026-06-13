@@ -148,6 +148,7 @@ export const getRetailSalePurchase =
     return response.data;
   };
 
+  
 // yaha se Reports ki functions
 // // STOCK ANALYSIS ERP
 export const getStockAnalysisERP = async (
@@ -160,6 +161,28 @@ export const getStockAnalysisERP = async (
     {
       startDate,
       endDate,
+      csa_id: String(csaId),
+    },
+    {
+      headers: await getHeaders(),
+    },
+  );
+
+  return response.data;
+};
+
+
+// STOCK AGEING REPORT
+export const getStockAgeingReport = async (
+  fromDate: string,
+  toDate: string,
+  csaId: number,
+) => {
+  const response = await axios.post(
+    `${apiUrl2}/retail/stock-ageing-report`,
+    {
+      fromDate,
+      toDate,
       csa_id: String(csaId),
     },
     {

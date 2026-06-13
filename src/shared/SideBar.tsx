@@ -13,7 +13,10 @@ import {
   Animated,
 } from 'react-native';
 
+import {useNavigation} from '@react-navigation/native';
+
 const {height} = Dimensions.get('window');
+
 
 type Props = {
   visible: boolean;
@@ -26,27 +29,29 @@ const SideBar = ({
   onClose,
   onLogout,
 }: Props) => {
+
+  const navigation = useNavigation<any>();
+
+  const slideAnim = useRef(
+    new Animated.Value(height),
+  ).current;
+
+  useEffect(() => {
+    if (visible) {
+      slideAnim.setValue(height);
+
+      Animated.spring(slideAnim, {
+        toValue: 0,
+        tension: 60,
+        friction: 9,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [visible]);
+
   if (!visible) {
     return null;
   }
-
-
-  const slideAnim = useRef(
-  new Animated.Value(height),
-).current;
-
-useEffect(() => {
-  if (visible) {
-    slideAnim.setValue(height);
-
-    Animated.spring(slideAnim, {
-      toValue: 0,
-      tension: 60,
-      friction: 9,
-      useNativeDriver: true,
-    }).start();
-  }
-}, [visible]);
 
 return (
   <View style={styles.overlay}>
@@ -132,16 +137,21 @@ return (
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.menuCard}>
+          style={styles.menuCard}
+          onPress={() => {
+            onClose();
+
+            navigation.navigate(
+              'StockAnalysis',
+            );
+          }}>
           <View>
-            <Text
-              style={styles.menuTitle}>
-              Reports
+            <Text style={styles.menuTitle}>
+              Stock Analysis
             </Text>
 
-            <Text
-              style={styles.menuSub}>
-              View generated reports
+            <Text style={styles.menuSub}>
+              View stock & remaining quantity
             </Text>
           </View>
 
