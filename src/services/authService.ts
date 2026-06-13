@@ -147,3 +147,25 @@ export const getRetailSalePurchase =
 
     return response.data;
   };
+
+// yaha se Reports ki functions
+// // STOCK ANALYSIS ERP
+export const getStockAnalysisERP = async (
+  csaId: number,
+  startDate: string = '',
+  endDate: string = '',
+) => {
+  const response = await axios.post(
+    `${apiUrl2}/erp/stock-anal`,
+    {
+      startDate,
+      endDate,
+      csa_id: String(csaId),
+    },
+    {
+      headers: await getHeaders(),
+    },
+  );
+
+  return response.data;
+};
