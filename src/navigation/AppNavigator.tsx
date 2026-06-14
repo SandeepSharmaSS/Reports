@@ -7,6 +7,7 @@ import SplashScreen from '../screens/splash/SplashScreen';
 import LoginScreen from '../screens/login/LoginScreen';
 import HomeScreen from '../screens/home/HomeScreen';
 import StockAnalysisScreen from '../screens/stock-analysis/StockAnalysisScreen';
+import StockAgeingScreen from '../screens/stock-ageing/StockAgeingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="StockAnalysis"
           component={StockAnalysisScreen}
+        />
+
+        <Stack.Screen
+          name="StockAgeing"
+          component={StockAgeingScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

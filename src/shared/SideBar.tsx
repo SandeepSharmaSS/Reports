@@ -160,6 +160,30 @@ return (
           </Text>
         </TouchableOpacity>
 
+                <TouchableOpacity
+          style={styles.menuCard}
+          onPress={() => {
+            onClose();
+
+            navigation.navigate(
+              'StockAgeing',
+            );
+          }}>
+          <View>
+            <Text style={styles.menuTitle}>
+              Stock Ageing
+            </Text>
+
+            <Text style={styles.menuSub}>
+              View stock & remaining quantity
+            </Text>
+          </View>
+
+          <Text style={styles.arrow}>
+            ›
+          </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.menuCard}>
           <View>
